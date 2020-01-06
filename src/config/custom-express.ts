@@ -1,17 +1,18 @@
 import express from "express";
-import routes from "./routes";
-import Database from "./database/database";
 import cors from "cors";
 import bodyParser from "body-parser";
+import bookRoutes from "../routes/book.routes";
+import healthRoutes from "../routes/health.routes";
+import userRoutes from "../routes/user.routes";
 
 const app = express();
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-const port: number = process.env.PORT | 3000;
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(cors());
-app.use(routes);
-new Database().connect().then(() => {
-  app.listen(port, () => console.log(`listen at ${port}`));
-});
+app.use(bookRoutes);
+app.use(healthRoutes);
+app.use(userRoutes);
+
+export default app;
